@@ -16,7 +16,8 @@ module.exports = {
   | Available Serializers - lucid, database
   |
   */
-  authenticator: 'session',
+  // authenticator: 'session',
+  authenticator: 'api',
 
   /*
   |--------------------------------------------------------------------------
@@ -90,7 +91,7 @@ module.exports = {
     scheme: 'api',
     uid: 'email',
     password: 'password',
-    //bawah tambahan
+    //bawah tambahan buat ekspayer nya
     expiry: null
   }
 }

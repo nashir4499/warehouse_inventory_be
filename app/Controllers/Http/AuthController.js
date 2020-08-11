@@ -1,61 +1,29 @@
 'use strict'
-
+const Token = use('App/Models/Token')
+const User = use('App/Models/User')
 class AuthController {
 
   async getLogin({ view }) {
     return view.render('login')
   }
 
-  async postLogin({ request, response, auth }) {
+  //Menggunakan Pake API
+  async postLoginApi({ request, auth, response }) {
     const { email, password } = request.all()
-    await auth.attempt(email, password)
-    return response.route('profile')
+    return auth.attempt(email, password)
   }
 
-  async postLogout({ auth, response }) {
-    await auth.logout()
-    return response.route('/')
+  async checkToken({ auth, response, request, params }) {
+    try {
+      return auth.check()
+    } catch (error) {
+      response.send('Missing or invalid api token')
+    }
   }
 
-  async getProfile({ auth, view }) {
-    const user = auth.user.toJSON()
-    return view.render('profile', { user: user })
-  }
-
-  // Menggunakan JWT
-  async postLoginJwt({ request, auth }) {
-    const { email, password } = request.all()
-    return auth
-      .authenticator('jwt')
-      .withRefreshToken()
-      .attempt(email, password)
-  }
-
-  async getProfileJwt({ response, auth }) {
-    return response.send(auth.current.user)
-  }
-
-  async postRefreshTokenJwt({ request, auth }) {
-    const refreshToken = request.input('refresh_token')
-    return await auth
-      .newRefreshToken()
-      .generateForRefreshToken(refreshToken)
-  }
-
-  async postLogoutJwt({ auth, response }) {
-    const apiToken = auth.getAuthHeader()
-    await auth
-      .authenticator('jwt')
-      .revokeTokens([apiToken])
-    return response.send({ message: 'Logout successfully!' })
-  }
-
-  //Menggunakan API
-  async postLoginApi({ request, auth }) {
-    const { email, password } = request.all()
-    return auth
-      .authenticator('api')
-      .attempt(email, password)
+  async generateUser({ request, auth, response, params }) {
+    const user = await User.find(request.params.id)
+    await auth.generate(user)
   }
 
   async getProfileApi({ response, auth }) {
@@ -64,20 +32,14 @@ class AuthController {
 
   async postLogoutApi({ auth, response }) {
     const apiToken = auth.getAuthHeader()
-    await auth
-      .authenticator('api')
-      .revokeTokens([apiToken])
+    await auth.revokeTokens([apiToken])
     return response.send({ message: 'Logout successfullt!' })
   }
 
   async postLogoutApiAll({ auth, response }) {
-    await auth
-      .authenticator('api')
-      .revokeTokens()
+    await auth.revokeTokens()
     return response.send({ message: 'Logout successfully!' })
   }
-
-
 
 }
 
