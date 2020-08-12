@@ -132,7 +132,7 @@ module.exports = {
   |
   */
   csrf: {
-    enable: true,
+    enable: false, //asalanya true
     methods: ['POST', 'PUT', 'DELETE'],
     filterUris: ['/api/(.*)'],
     cookieOptions: {
