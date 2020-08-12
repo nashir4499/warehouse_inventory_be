@@ -31,23 +31,25 @@ Route.post('api/api/generateUser/:id', 'AuthController.generateUser').as('genera
 //Route ke barang
 Route.get('/barang', 'BarangController.index')
 Route.post('/barang', 'BarangController.store')
-Route.get('/barang/:series', 'BarangController.show')
-Route.post('/barang/:series', 'BarangController.update')
-Route.delete('/barang/:series', 'BarangController.delete')
+Route.get('/barang/:id', 'BarangController.show')
+Route.post('/barang/:id', 'BarangController.update')
+Route.delete('/barang/:id', 'BarangController.delete')
 
 //Route ke barang keluar
-Route.get('/barang/keluar', 'BarangKeluarController.index')
-Route.post('/barang/keluar', 'BarangKeluarController.store')
-Route.get('/barang/keluar/:no_fakturbk', 'BarangKeluarController.show')
-Route.post('/barang/keluar/:no_fakturbk', 'BarangKeluarController.update')
-Route.delete('/barang/keluar/:no_fakturbk', 'BarangKeluarController.delete')
+Route.get('/bkeluar', 'BarangKeluarController.index')
+Route.get('/bkeluar/jumlah', 'BarangKeluarController.sumStock')
+Route.post('/bkeluar', 'BarangKeluarController.store')
+Route.get('/bkeluar/:id', 'BarangKeluarController.show')
+Route.post('/bkeluar/:id', 'BarangKeluarController.update')
+Route.delete('/bkeluar/:id', 'BarangKeluarController.delete')
 
 //Route ke barang masuk
-Route.get('/barang/masuk', 'BarangMasukController.index')
-Route.post('/barang/masuk', 'BarangMasukController.store')
-Route.get('/barang/masuk/:no_fakturbm', 'BarangMasukController.show')
-Route.post('/barang/masuk/:no_fakturbm', 'BarangMasukController.update')
-Route.delete('/barang/masuk/:no_fakturbm', 'BarangMasukController.delete')
+Route.get('/bmasuk', 'BarangMasukController.index')
+Route.get('/bmasuk/jumlah', 'BarangMasukController.sumStock')
+Route.post('/bmasuk', 'BarangMasukController.store')
+Route.get('/bmasuk/:id', 'BarangMasukController.show')
+Route.post('/bmasuk/:id', 'BarangMasukController.update')
+Route.delete('/bmasuk/:id', 'BarangMasukController.delete')
 
 //Route ke kategori
 Route.get('/kategori', 'KategoriController.index')
@@ -59,9 +61,9 @@ Route.delete('/kategori/:id', 'KategoriController.delete')
 //Route ke rak
 Route.get('/rak', 'RakController.index')
 Route.post('/rak', 'RakController.store')
-Route.get('/rak/:rak_id', 'RakController.show')
-Route.post('/rak/:rak_id', 'RakController.update')
-Route.delete('/rak/:rak_id', 'RakController.delete')
+Route.get('/rak/:id', 'RakController.show')
+Route.post('/rak/:id', 'RakController.update')
+Route.delete('/rak/:id', 'RakController.delete')
 
 //Route ke role user
 Route.get('/role', 'RoleUserController.index')
@@ -72,10 +74,11 @@ Route.delete('/role/:id', 'RoleUserController.delete')
 
 //Route ke suplier
 Route.get('/suplier', 'SuplierController.index')
+Route.get('/suplier/jumlah', 'SuplierController.suplierCount')
 Route.post('/suplier', 'SuplierController.store')
-Route.get('/suplier/:suplier_id', 'SuplierController.show')
-Route.post('/suplier/:suplier_id', 'SuplierController.update')
-Route.delete('/suplier/:suplier_id', 'SuplierController.delete')
+Route.get('/suplier/:id', 'SuplierController.show')
+Route.post('/suplier/:id', 'SuplierController.update')
+Route.delete('/suplier/:id', 'SuplierController.delete')
 
 
 

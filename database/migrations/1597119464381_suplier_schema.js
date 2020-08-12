@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class SuplierSchema extends Schema {
   up() {
     this.create('supliers', (table) => {
-      table.string('suplier_id', 10).primary()
+      table.string('id', 10).primary()
       table.text('alamat')
       table.string('phone')
       table.text('deskripsi')

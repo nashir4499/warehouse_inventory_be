@@ -4,12 +4,12 @@ const BarangMasuk = use("App/Models/BarangMasuk")
 
 class BarangMasukController {
   async store({ request, response }) {
-    const dataBarangMasuk = request.only(['no_fakturbm', 'stock_bm', 'deskripsi', 'barang_series'])
+    const dataBarangMasuk = request.only(['id', 'stock_bm', 'deskripsi', 'barang_id'])
     const barangMasukBaru = new BarangMasuk
-    barangMasukBaru.no_fakturbm = dataBarangMasuk.no_fakturbm
+    barangMasukBaru.id = dataBarangMasuk.id
     barangMasukBaru.stock_bm = dataBarangMasuk.stock_bm
     barangMasukBaru.deskripsi = dataBarangMasuk.deskripsi
-    barangMasukBaru.barang_series = dataBarangMasuk.barang_series
+    barangMasukBaru.barang_id = dataBarangMasuk.barang_id
 
     await barangMasukBaru.save()
     return response.status(200).json({
@@ -23,18 +23,18 @@ class BarangMasukController {
   }
 
   async show({ request, response, params }) {
-    const barangMasuk = await BarangMasuk.find(request.params.no_fakturbm)
+    const barangMasuk = await BarangMasuk.find(request.params.id)
     await barangMasuk.loadMany(['barang'])
     return response.status(200).json(barangMasuk)
   }
 
   async update({ request, response, params }) {
-    const dataBarangMasuk = request.only(['no_fakturbm', 'stock_bm', 'deskripsi', 'barang_series'])
-    const barangMasuk = await BarangMasuk.find(request.params.no_fakturbm)
-    barangMasuk.no_fakturbm = dataBarangMasuk.no_fakturbm
+    const dataBarangMasuk = request.only(['id', 'stock_bm', 'deskripsi', 'barang_id'])
+    const barangMasuk = await BarangMasuk.find(request.params.id)
+    barangMasuk.id = dataBarangMasuk.id
     barangMasuk.stock_bm = dataBarangMasuk.stock_bm
     barangMasuk.deskripsi = dataBarangMasuk.deskripsi
-    barangMasuk.barang_series = dataBarangMasuk.barang_series
+    barangMasuk.barang_id = dataBarangMasuk.barang_id
 
     await barangMasuk.save()
 
@@ -42,12 +42,17 @@ class BarangMasukController {
   }
 
   async delete({ request, response, params, session }) {
-    const barangMasuk = await BarangMasuk.find(request.params.no_fakturbm)
+    const barangMasuk = await BarangMasuk.find(request.params.id)
     await barangMasuk.delete()
 
     return response.status(200).json({
       message: 'Data Barang Masuk Berhasil Dihapus'
     })
+  }
+
+  async sumStock({ request, response }) {
+    const stock_bm = await BarangMasuk.query().getSum('stock_bm')
+    return response.status(200).json(stock_bm)
   }
 }
 
