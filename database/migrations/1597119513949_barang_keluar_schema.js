@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class BarangKeluarSchema extends Schema {
   up() {
     this.create('barang_keluars', (table) => {
-      table.string('id').primary()
+      table.increments()
       table.integer('stock_bk')
       table.text('deskripsi')
       table.integer('barang_id')

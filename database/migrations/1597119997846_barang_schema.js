@@ -8,7 +8,7 @@ class BarangSchema extends Schema {
     this.create('barangs', (table) => {
       table.integer('id').primary()
       table.string('produk')
-      table.string('suplier_id', 10)
+      table.string('suplier_id', 50)
       table.integer('kategori_id')
       table.integer('stock')
       table.text('deskripsi')

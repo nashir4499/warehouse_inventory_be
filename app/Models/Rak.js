@@ -4,9 +4,7 @@
 const Model = use('Model')
 
 class Rak extends Model {
-  barang() {
-    return this.belongsTo('App/Models/Barang')
-  }
+
 }
 
 module.exports = Rak

@@ -4,9 +4,8 @@ const BarangKeluar = use("App/Models/BarangKeluar")
 
 class BarangKeluarController {
   async store({ request, response }) {
-    const dataBarangKeluar = request.only(['id', 'stock_bk', 'deskripsi', 'barang_id'])
+    const dataBarangKeluar = request.only(['stock_bk', 'deskripsi', 'barang_id'])
     const barangKeluarBaru = new BarangKeluar
-    barangKeluarBaru.id = dataBarangKeluar.id
     barangKeluarBaru.stock_bk = dataBarangKeluar.stock_bk
     barangKeluarBaru.deskripsi = dataBarangKeluar.deskripsi
     barangKeluarBaru.barang_id = dataBarangKeluar.barang_id
@@ -29,9 +28,8 @@ class BarangKeluarController {
   }
 
   async update({ request, response, params }) {
-    const dataBarangKeluar = request.only(['id', 'stock_bk', 'deskripsi', 'barang_id'])
+    const dataBarangKeluar = request.only(['stock_bk', 'deskripsi', 'barang_id'])
     const barangKeluar = await BarangKeluar.find(request.params.id)
-    barangKeluar.id = dataBarangKeluar.id
     barangKeluar.stock_bk = dataBarangKeluar.stock_bk
     barangKeluar.deskripsi = dataBarangKeluar.deskripsi
     barangKeluar.barang_id = dataBarangKeluar.barang_id
