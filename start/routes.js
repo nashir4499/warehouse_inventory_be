@@ -50,7 +50,7 @@ Route.group(() => {
 
   //Route ke barang keluar
   Route.get("/bkeluar", "BarangKeluarController.index");
-  Route.get("/bkeluar/jumlah", "BarangKeluarController.sumStock");
+  Route.get("/bkeluar/jumlah", "BarangKeluarController.sumstok");
   Route.get(
     "/bkeluar/jumlah/:barang_id",
     "BarangKeluarController.sumOneBarang"
@@ -63,7 +63,7 @@ Route.group(() => {
   //Route ke barang masuk
   Route.get("/bmasuk", "BarangMasukController.index");
   Route.get("/bmasuk/oneForAll", "BarangMasukController.oneForAll");
-  Route.get("/bmasuk/jumlah", "BarangMasukController.sumStock");
+  Route.get("/bmasuk/jumlah", "BarangMasukController.sumstok");
   Route.get("/bmasuk/jumlah/:barang_id", "BarangMasukController.sumOneBarang");
   Route.post("/bmasuk", "BarangMasukController.store");
   Route.get("/bmasuk/:id", "BarangMasukController.show");
@@ -79,7 +79,7 @@ Route.group(() => {
 
   //Route ke rak
   Route.get("/rak", "RakController.index");
-  Route.get("/rak/jumlah", "RakController.sumStock");
+  Route.get("/rak/jumlah", "RakController.sumstok");
   Route.post("/rak", "RakController.store");
   Route.get("/rak/:id", "RakController.show");
   Route.post("/rak/:id", "RakController.update");
@@ -87,7 +87,12 @@ Route.group(() => {
 
   //Route ke rak terpakai
   Route.get("/rakterpakai", "RakTerpakaiController.index");
-  Route.get("/rakterpakai/jumlah", "RakTerpakaiController.sumStock");
+  Route.get("/rakterpakai/oneForAll", "RakTerpakaiController.oneForAll");
+  Route.get(
+    "/rakterpakai/jumlah/:barang_id",
+    "RakTerpakaiController.sumOneBarang"
+  );
+  Route.get("/rakterpakai/jumlah", "RakTerpakaiController.sumVolume");
   Route.post("/rakterpakai", "RakTerpakaiController.store");
   Route.get("/rakterpakai/:id", "RakTerpakaiController.show");
   Route.get(
@@ -112,5 +117,3 @@ Route.group(() => {
   Route.post("/suplier/:id", "SuplierController.update");
   Route.delete("/suplier/:id", "SuplierController.delete");
 }).middleware(["auth"]);
-
-Route.get("/rakAndro/:id", "RakController.show");

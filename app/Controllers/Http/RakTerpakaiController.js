@@ -4,9 +4,15 @@ const RakTerpakai = use("App/Models/RakTerpakai");
 
 class RakTerpakaiController {
   async store({ request, response }) {
-    const dataRakTerpakai = request.only(["stock", "rak_id", "barang_id"]);
+    const dataRakTerpakai = request.only([
+      "stok",
+      "volume_terpakai",
+      "rak_id",
+      "barang_id",
+    ]);
     const rakTerpakaiBaru = new RakTerpakai();
-    rakTerpakaiBaru.stock = dataRakTerpakai.stock;
+    rakTerpakaiBaru.stok = dataRakTerpakai.stok;
+    rakTerpakaiBaru.volume_terpakai = dataRakTerpakai.volume_terpakai;
     rakTerpakaiBaru.rak_id = dataRakTerpakai.rak_id;
     rakTerpakaiBaru.barang_id = dataRakTerpakai.barang_id;
     await rakTerpakaiBaru.save();
@@ -31,9 +37,15 @@ class RakTerpakaiController {
   }
 
   async update({ request, response, params }) {
-    const dataRakTerpakai = request.only(["stock", "rak_id", "barang_id"]);
+    const dataRakTerpakai = request.only([
+      "stok",
+      "volume_terpakai",
+      "rak_id",
+      "barang_id",
+    ]);
     const rakTerpakai = await RakTerpakai.find(request.params.id);
-    rakTerpakai.stock = dataRakTerpakai.stock;
+    rakTerpakai.stok = dataRakTerpakai.stok;
+    rakTerpakai.volume_terpakai = dataRakTerpakai.volume_terpakai;
     rakTerpakai.rak_id = dataRakTerpakai.rak_id;
     rakTerpakai.barang_id = dataRakTerpakai.barang_id;
     rakTerpakai.anggota_id = dataRakTerpakai.anggota_id;
@@ -51,9 +63,14 @@ class RakTerpakaiController {
     });
   }
 
-  async sumStock({ request, response }) {
-    const stock = await RakTerpakai.query().getSum("stock");
-    return response.status(200).json(stock);
+  async sumstok({ request, response }) {
+    const stok = await RakTerpakai.query().getSum("stok");
+    return response.status(200).json(stok);
+  }
+
+  async sumVolume({ request, response }) {
+    const stok = await RakTerpakai.query().getSum("volume_terpakai");
+    return response.status(200).json(stok);
   }
 
   async getByBarAndRak({ request, response }) {
@@ -61,6 +78,21 @@ class RakTerpakaiController {
       .where("rak_id", request.params.rak_id)
       .andWhere("barang_id", request.params.barang_id)
       .with("rak")
+      .with("barang")
+      .fetch();
+    return response.status(200).json(rakTerpakai);
+  }
+
+  async sumOneBarang({ request, response }) {
+    const rakTerpakai = await RakTerpakai.query()
+      .where("barang_id", request.params.barang_id)
+      .getSum("stok");
+    return response.status(200).json(rakTerpakai);
+  }
+
+  async oneForAll({ request, response }) {
+    const rakTerpakai = await RakTerpakai.query()
+      .groupBy("barang_id")
       .with("barang")
       .fetch();
     return response.status(200).json(rakTerpakai);

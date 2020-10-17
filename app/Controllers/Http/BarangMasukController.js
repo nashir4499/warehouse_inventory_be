@@ -4,13 +4,9 @@ const BarangMasuk = use("App/Models/BarangMasuk");
 
 class BarangMasukController {
   async store({ request, response }) {
-    const dataBarangMasuk = request.only([
-      "stock_bm",
-      "deskripsi",
-      "barang_id",
-    ]);
+    const dataBarangMasuk = request.only(["stok_bm", "deskripsi", "barang_id"]);
     const barangMasukBaru = new BarangMasuk();
-    barangMasukBaru.stock_bm = dataBarangMasuk.stock_bm;
+    barangMasukBaru.stok_bm = dataBarangMasuk.stok_bm;
     barangMasukBaru.deskripsi = dataBarangMasuk.deskripsi;
     barangMasukBaru.barang_id = dataBarangMasuk.barang_id;
 
@@ -32,13 +28,9 @@ class BarangMasukController {
   }
 
   async update({ request, response, params }) {
-    const dataBarangMasuk = request.only([
-      "stock_bm",
-      "deskripsi",
-      "barang_id",
-    ]);
+    const dataBarangMasuk = request.only(["stok_bm", "deskripsi", "barang_id"]);
     const barangMasuk = await BarangMasuk.find(request.params.id);
-    barangMasuk.stock_bm = dataBarangMasuk.stock_bm;
+    barangMasuk.stok_bm = dataBarangMasuk.stok_bm;
     barangMasuk.deskripsi = dataBarangMasuk.deskripsi;
     barangMasuk.barang_id = dataBarangMasuk.barang_id;
 
@@ -56,15 +48,15 @@ class BarangMasukController {
     });
   }
 
-  async sumStock({ request, response }) {
-    const stock_bm = await BarangMasuk.query().getSum("stock_bm");
-    return response.status(200).json(stock_bm);
+  async sumstok({ request, response }) {
+    const stok_bm = await BarangMasuk.query().getSum("stok_bm");
+    return response.status(200).json(stok_bm);
   }
 
   async sumOneBarang({ request, response }) {
     const barangMasuk = await BarangMasuk.query()
       .where("barang_id", request.params.barang_id)
-      .getSum("stock_bm");
+      .getSum("stok_bm");
     return response.status(200).json(barangMasuk);
   }
   async oneForAll({ request, response }) {

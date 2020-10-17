@@ -1,23 +1,25 @@
-'use strict'
+"use strict";
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
-const Schema = use('Schema')
+const Schema = use("Schema");
 
 class BarangMasukSchema extends Schema {
   up() {
-    this.create('barang_masuks', (table) => {
-      table.increments()
-      table.integer('stock_bm')
-      table.text('deskripsi')
-      table.integer('barang_id')
+    this.create("barang_masuks", (table) => {
+      table.increments();
+      table.integer("stok_bm");
+      table.text("deskripsi");
+      table.string("barang_id");
+      // ada perubahan di bawah
+      // table.date("tgl_kadaluarsa");
       // table.string('suplier_id', 10)
-      table.timestamps()
-    })
+      table.timestamps();
+    });
   }
 
   down() {
-    this.drop('barang_masuks')
+    this.drop("barang_masuks");
   }
 }
 
-module.exports = BarangMasukSchema
+module.exports = BarangMasukSchema;
