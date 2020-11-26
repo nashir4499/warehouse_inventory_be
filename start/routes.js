@@ -16,12 +16,14 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
+
 Route.on("/").render("index");
 
 Route.get("login", "AuthController.getLogin").as("login");
 Route.post("api/api/login", "AuthController.postLoginApi").as("loginApi");
 Route.post("api/api/signup", "AuthController.signup").as("signupnApi");
 Route.group(() => {
+  Route.get("api/foto/:id", "AuthController.fotoProfile").as("foto");
   //menggunakan API
   Route.post("api/api/logout", "AuthController.postLogoutApi").as("logoutApi");
   Route.post("api/api/logoutAll", "AuthController.postLogoutApiAll").as(
@@ -116,4 +118,10 @@ Route.group(() => {
   Route.get("/suplier/:id", "SuplierController.show");
   Route.post("/suplier/:id", "SuplierController.update");
   Route.delete("/suplier/:id", "SuplierController.delete");
+
+  //upload foto
+  Route.post("api/upload", "AuthController.uploadFoto");
+  // Route.get("api/foto", "AuthController.fotoProfile").as("foto");
+
+
 }).middleware(["auth"]);
